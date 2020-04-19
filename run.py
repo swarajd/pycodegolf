@@ -7,14 +7,10 @@ client = docker.from_env()
 # malicious_cmd = "\"; sleep 10; echo \"evil"
 # malicious_cmd = """
 # import os
-# a = 5
-# b = 1
+# print(1234)
 # while True:
-#     if b >= a:
-#         break
-#     else:
-#         print(b)
-#     b += 1
+#     pid = os.fork()
+#     print(f'pid: {pid}')
 # """
 malicious_cmd = "print(12)"
 
@@ -44,10 +40,11 @@ try:
     )
 
     exit_code = container.wait(timeout=5)
-    if (exit_code['StatusCode'] != 0):
-        raise DockerTaskException(exit_code)
-
     logs = container.logs()
+    
+    if (exit_code['StatusCode'] != 0):
+        raise DockerTaskException((exit_code, logs))
+
     print(logs)
 
 except requests.exceptions.ConnectionError as err:
