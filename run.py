@@ -9,16 +9,12 @@ load_dotenv()
 
 client = docker.from_env()
 
-# malicious_cmd = "\"; sleep 10; echo \"evil"
-malicious_cmd = """print(input())"""
-malicious_cmd = "print(12)"
-
 nproc_limit = docker.types.Ulimit(name="nproc", hard=3)
 
-input_path = os.path.abspath("inputs")
+problems_path = os.path.abspath("problems")
 programs_path = os.path.abspath("tmp")
 
-input_mount = docker.types.Mount("/inputs/", input_path, read_only=True, type="bind")
+problem_mount = docker.types.Mount("/problems/", problems_path, read_only=True, type="bind")
 tmp_mount   = docker.types.Mount("/tmp/", programs_path, type="bind")
 
 class DockerTaskException(Exception):
@@ -38,7 +34,7 @@ def execute_code(input_filename, code_filename):
             # auto_remove=True,
             # remove=True,
             mounts=[
-                input_mount,
+                problem_mount,
                 tmp_mount
             ],
             network_disabled=True,
@@ -71,4 +67,4 @@ def execute_code(input_filename, code_filename):
         container.stop(timeout=0)
         container.remove()
 
-execute_code("/inputs/input.txt", "/tmp/test.py")
+execute_code("/problems/1/input.txt", "/tmp/test.py")
