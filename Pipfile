@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 docker = "*"
 python-dotenv = "*"
+pika = "*"
 
 [requires]
 python_version = "3.7"
