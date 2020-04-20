@@ -1,0 +1,2 @@
+- rabbitmq installation requires adding gpg keys and installing erlang
+- 
