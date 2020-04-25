@@ -9,6 +9,7 @@ verify_ssl = true
 docker = "*"
 python-dotenv = "*"
 pika = "*"
+boto3 = "*"
 
 [requires]
 python_version = "3.7"

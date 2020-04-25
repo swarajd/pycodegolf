@@ -1,2 +1,1 @@
-- rabbitmq installation requires adding gpg keys and installing erlang
-- 
+- using elasticmq, download the docker image and run
